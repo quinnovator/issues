@@ -32,11 +32,18 @@ function PriorityBadge({ priority }: { priority: number }) {
 
   return (
     <span
-      className={`inline-block rounded-full px-2 text-sm font-medium text-white ${color}`}
+      className={`inline-block w-fit whitespace-nowrap rounded-full px-2 text-sm font-medium text-white ${color}`}
     >
       {text} Priority
     </span>
   );
+}
+
+function truncate(str: string, num: number) {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + "...";
 }
 
 export default function IssueCard({
@@ -49,13 +56,15 @@ export default function IssueCard({
   priority?: number;
 }) {
   return (
-    <Card className="max-w-md cursor-pointer shadow-sm hover:shadow-md">
+    <Card className="max-w-lg cursor-pointer shadow-sm hover:shadow-md">
       <CardHeader>
-        <div className="flex items-center gap-1">
+        <div className="justify-center-center flex flex-col gap-2">
           <CardTitle>{title}</CardTitle>
           {priority !== undefined && <PriorityBadge priority={priority} />}
         </div>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="overflow-hidden">
+          {truncate(description ?? "", 200)}
+        </CardDescription>
       </CardHeader>
     </Card>
   );

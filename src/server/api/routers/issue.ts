@@ -73,4 +73,20 @@ export const issueRouter = createTRPCRouter({
 
     return issues;
   }),
+
+  // Create a new issue
+  createIssue: publicProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        priority: z.number().min(0).max(4),
+        teamId: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const issue = await linear.createIssue(input);
+
+      return issue;
+    }),
 });

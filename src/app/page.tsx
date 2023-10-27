@@ -2,6 +2,8 @@ import { Card } from "@/components/ui/card";
 import IssueCard from "@/components/issue-card";
 import Image from "next/image";
 import { api } from "@/trpc/server";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function Home() {
   const inProgress = await api.issue.getInProgressIssues.query();
@@ -10,14 +12,19 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col gap-4 p-12">
-      <div className="flex w-full items-center justify-center gap-1">
-        <Image
-          src="/mv_logo_dark.png"
-          alt="MyVoice Logo"
-          width={60}
-          height={60}
-        />
-        <p className="text-lg font-medium">MyVoice Issue Tracker</p>
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex w-full items-center justify-center gap-1">
+          <Image
+            src="/mv_logo_dark.png"
+            alt="MyVoice Logo"
+            width={60}
+            height={60}
+          />
+          <p className="text-lg font-medium">MyVoice Issue Tracker</p>
+        </div>
+        <Link href="/new">
+          <Button className="max-w-md">Create Issue</Button>
+        </Link>
       </div>
       <div className="space-y-10 pl-4">
         <IssueRow title="In Progress">
@@ -65,7 +72,7 @@ function IssueRow({
   return (
     <div>
       <h2 className="text-lg font-medium underline">{title}</h2>
-      <Card className="mt-4 grid grid-flow-col gap-4 overflow-x-scroll border-none shadow-none">
+      <Card className="l mt-4 grid grid-cols-5 gap-4 overflow-x-scroll border-none shadow-none">
         {children}
       </Card>
     </div>
