@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
+import { MYVOICE_TEAM_ID } from "@/lib/constants";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -47,7 +48,7 @@ export default function Page() {
       title: "",
       description: "",
       priority: 4,
-      teamId: "e9f70132-5753-4806-9c4f-bcff6163aa46",
+      teamId: MYVOICE_TEAM_ID,
     },
   });
 
