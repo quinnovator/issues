@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import linear from "@/server/linear";
+import { LinearError } from "@linear/sdk";
 
 export const issueRouter = createTRPCRouter({
   // Gets a single issue by ID
@@ -10,6 +11,64 @@ export const issueRouter = createTRPCRouter({
 
     return issue;
   }),
+
+  // Get issue comments
+  getIssueComments: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      try {
+        const graphQLClient = linear.client;
+        const comments = await graphQLClient.rawRequest<
+          {
+            issue: {
+              comments: { nodes: { body: string; createdAt: string }[] };
+            };
+          },
+          { issueId: string }
+        >(
+          `
+          query CommentQuery($issueId: String!) {
+            issue(id: $issueId) {
+              comments {
+                nodes {
+                  body
+                  createdAt
+                }
+              }
+            }
+          }`,
+          { issueId: input },
+        );
+
+        const list =
+          comments.data?.issue.comments.nodes.map((c) => ({
+            body: c.body,
+            createdAt: c.createdAt,
+          })) ?? [];
+
+        return list;
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    }),
+
+  // Leave a comment on an issue
+  createIssueComment: publicProcedure
+    .input(
+      z.object({
+        issueId: z.string(),
+        body: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const comment = await linear.createComment({
+        issueId: input.issueId,
+        body: input.body,
+      });
+
+      return comment.success;
+    }),
 
   // Gets all issues currently in progress
   getInProgressIssues: publicProcedure.query(async () => {

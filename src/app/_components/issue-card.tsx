@@ -4,6 +4,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 function PriorityBadge({ priority }: { priority: number }) {
   let color, text;
@@ -47,25 +48,33 @@ function truncate(str: string, num: number) {
 }
 
 export default function IssueCard({
+  id,
   title,
   description,
   priority,
 }: {
+  id: string;
   title: string;
   description?: string;
   priority?: number;
 }) {
   return (
-    <Card className="max-w-lg cursor-pointer shadow-sm hover:shadow-md">
-      <CardHeader>
-        <div className="justify-center-center flex flex-col gap-2">
-          <CardTitle>{title}</CardTitle>
-          {priority !== undefined && <PriorityBadge priority={priority} />}
-        </div>
-        <CardDescription className="overflow-hidden">
-          {truncate(description ?? "", 200)}
-        </CardDescription>
-      </CardHeader>
-    </Card>
+    <Link href={`/issue/${id}`} target="_blank">
+      <Card className="h-full max-w-lg cursor-pointer shadow-sm hover:shadow-md">
+        <CardHeader>
+          <div className="justify-center-center flex flex-col gap-2">
+            <CardTitle>{title}</CardTitle>
+            {priority !== undefined && <PriorityBadge priority={priority} />}
+          </div>
+          <CardDescription className="overflow-hidden">
+            {description ? (
+              truncate(description, 200)
+            ) : (
+              <i>No Description...</i>
+            )}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </Link>
   );
 }

@@ -1,3 +1,5 @@
+import Loader from "./_components/loader";
+
 export default function Loading() {
-  return <p>Loading...</p>;
+  return <Loader />;
 }
