@@ -14,7 +14,7 @@ export default function CompletedRecentlyRow() {
   }
 
   return (
-    <IssueRow title="Completed Recently (last 30 days)">
+    <IssueRow title="Completed Recently (last 3 months)">
       {(completed ?? []).map((issue) => (
         <IssueCard
           key={issue.id}

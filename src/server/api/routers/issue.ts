@@ -2,7 +2,6 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import linear from "@/server/linear";
-import { LinearError } from "@linear/sdk";
 
 export const issueRouter = createTRPCRouter({
   // Gets a single issue by ID

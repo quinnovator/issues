@@ -14,8 +14,8 @@ export default function Home() {
       </div>
       <div className="space-y-10 pl-4">
         <InProgressRow />
-        <CompletedRecentlyRow />
         <BacklogRow />
+        <CompletedRecentlyRow />
       </div>
     </main>
   );

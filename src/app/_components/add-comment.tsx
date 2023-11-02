@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
-import { useRef } from "react";
 
 const formSchema = z.object({
   issueId: z.string().uuid(),
