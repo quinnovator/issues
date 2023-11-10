@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/trpc/utils.warmDb",
+      "schedule": "0 5 * * *"
+    }
+  ]
+}

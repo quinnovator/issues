@@ -1,5 +1,6 @@
 import { issueRouter } from "@/server/api/routers/issue";
 import { createTRPCRouter } from "@/server/api/trpc";
+import { utilsRouter } from "./routers/utils";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   issue: issueRouter,
+  utils: utilsRouter,
 });
 
 // export type definition of API
